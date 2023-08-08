@@ -1,20 +1,28 @@
-"use client";
+'use client';
 
 import Toggle from 'react-toggle';
-import { useTheme } from "next-themes";
+import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { ThunkDispatch } from '@reduxjs/toolkit';
 
 import 'react-toggle/style.css';
 import './sidebar.css';
+import { fetchAllBoards } from '@import/redux/features/kanban';
 
 const Sidebar = () => {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
   useEffect(() => {
     setMounted(true);
-  }, [])
-  
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchAllBoards());
+  }, []);
+
   const themeChangeHandler = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);

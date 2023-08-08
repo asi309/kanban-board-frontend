@@ -1,11 +1,48 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { KANBAN_API } from '@import/constants/url';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+
+interface Board {
+  name: string;
+  userId: string;
+  id: string;
+}
+
+interface Column {
+  id: string;
+  name: string;
+  boardId: string;
+}
+
+interface Task {
+  id: string;
+  title: string;
+  description: string;
+  status: string;
+  boardId: string;
+}
+
+interface Subtask {
+  id: string;
+  title: string;
+  isCompleted: string;
+  taskId: string;
+  boardId: string;
+}
+
+interface KanbanState {
+  boards: Board[];
+  columns: Column[];
+  tasks: Task[];
+  subtasks: Subtask[];
+}
 
 const initialState = {
   boards: [],
   columns: [],
   tasks: [],
   subtasks: [],
-};
+} as KanbanState;
 
 // Sample structures for the objects of various types
 /* Boards: {
@@ -34,13 +71,22 @@ const initialState = {
   subtaskId: For further nesting
 } */
 
+export const fetchAllBoards = createAsyncThunk('board/fetchAllBoards', async () => {
+  const response = await fetch(`${KANBAN_API}/boards`, { method: 'GET' });
+  const responseJson = await response.json();
+  console.log(responseJson);
+  return responseJson;
+});
+
 const kanbanSlice = createSlice({
   name: 'board',
   initialState,
   reducers: {
-    addBoard: (state, action) => {
+    addBoard: (state: KanbanState, action: PayloadAction) => {
       const boards = [...state.boards];
-      boards.push(action.payload.board);
+      if (action.payload !== null) {
+        boards.push(action.payload!);
+      }
       state.boards = boards;
     },
     deleteBoard: (state, action) => {
@@ -65,10 +111,12 @@ const kanbanSlice = createSlice({
     /*setBoards: (state, action) => {
       state.boards = action.payload.boards;
     }, */
-    addTask: (state, action) => {
+    addTask: (state, action: PayloadAction) => {
       const tasks = [...state.tasks];
-      tasks.push(action.payload.tasks);
-      state.tasks.push(tasks);
+      if (action.payload !== null) {
+        tasks.push(action.payload!);
+      }
+      state.tasks = tasks;
     },
     deleteTask: (state, action) => {
       const tasks = [...state.tasks];
@@ -81,6 +129,11 @@ const kanbanSlice = createSlice({
       state.tasks = tasks;
       state.subtasks = subtasks;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchAllBoards.fulfilled, (state, action) => {
+      state.boards = action.payload;
+    });
   },
 });
 
