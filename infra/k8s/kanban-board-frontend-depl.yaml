@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kanban-board-frontend-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kanban-board-frontend
+  template:
+    metadata:
+      labels:
+        app: kanban-board-frontend
+    spec:
+      containers:
+      - name: kanban-board-frontend
+        image: asi309/kanban-board-frontend
+        resources:
+          limits:
+            memory: "500Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kanban-board-frontend-srv
+spec:
+  selector:
+    app: kanban-board-frontend
+  ports:
+  - port: 3000
+    targetPort: 3000
+
