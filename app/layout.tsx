@@ -2,6 +2,7 @@ import './globals.css';
 import { Plus_Jakarta_Sans } from 'next/font/google';
 import ReduxProvider from '@import/redux/ReduxProvider';
 import ThemeProvider from '@import/ThemeProvider';
+import { NextAuthProvider } from '@import/containers/AuthProvider';
 
 const inter = Plus_Jakarta_Sans({ subsets: ['latin'] });
 
@@ -23,7 +24,9 @@ export default function RootLayout({
           storageKey="theme"
           enableColorScheme={false}
         >
-          <ReduxProvider>{children}</ReduxProvider>
+          <NextAuthProvider>
+            <ReduxProvider>{children}</ReduxProvider>
+          </NextAuthProvider>
         </ThemeProvider>
       </body>
     </html>
