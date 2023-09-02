@@ -4,6 +4,9 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { KANBAN_API } from '@import/constants/url';
 
 export const authOptions: NextAuthOptions = {
+  pages: {
+    signIn: '/auth/login',
+  },
   // Setup providers for auth
   providers: [
     CredentialsProvider({
