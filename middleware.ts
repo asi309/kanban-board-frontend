@@ -1,6 +1,6 @@
 import { withAuth } from 'next-auth/middleware';
 
-export const config = { matcher: ['/((?!auth).*)'] };
+export const config = { matcher: ['/((?!auth|favicon).*)'] };
 
 export default withAuth(
   (req) => {

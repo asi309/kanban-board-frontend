@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { ThunkDispatch } from '@reduxjs/toolkit';
 
 import 'react-toggle/style.css';
-import './sidebar.css';
+import './Sidebar.css';
 import { fetchAllBoards } from '@import/redux/features/kanban';
 
 const Sidebar = () => {

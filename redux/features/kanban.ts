@@ -72,7 +72,8 @@ const initialState = {
 } */
 
 export const fetchAllBoards = createAsyncThunk('board/fetchAllBoards', async () => {
-  const response = await fetch(`${KANBAN_API}/boards`, { method: 'GET' });
+  // const response = await fetch(`${KANBAN_API}/boards`, { method: 'GET' });
+  const response = await fetch(`/api/boards`, { method: 'GET' });
   const responseJson = await response.json();
   console.log(responseJson);
   return responseJson;
