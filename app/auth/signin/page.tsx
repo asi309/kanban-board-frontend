@@ -1,11 +1,11 @@
-import LoginForm from './form';
+import SigninForm from './form';
 import Link from 'next/link';
 
-const LoginPage = () => {
+const SigninPage = () => {
   return (
     <div>
       <section className="">
-        <LoginForm />
+        <SigninForm />
       </section>
       <section>
         <div>Don't have an account yet?</div>
@@ -15,4 +15,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SigninPage;

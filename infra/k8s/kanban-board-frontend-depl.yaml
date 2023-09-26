@@ -17,7 +17,7 @@ spec:
         image: asi309/kanban-board-frontend
         resources:
           limits:
-            memory: "800Mi"
+            memory: "1024Mi"
             cpu: "500m"
 ---
 apiVersion: v1
